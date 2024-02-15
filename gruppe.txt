@@ -1,0 +1,2 @@
+Gruppenmitglieder: Tabea Maute, Luis Neumeier, Philipp Eichwald
+Github-Repository: https://github.com/xTerradon/DHBW_Data_Warehouse
