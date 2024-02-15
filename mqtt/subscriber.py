@@ -1,15 +1,16 @@
 import paho.mqtt.client as mqtt
 import time
-
+from dotenv import load_dotenv
 import psycopg2
 import os
 
-conn = psycopg2.connect(os.environ['POSTGRES_LOGIN'])
+load_dotenv()
+
+conn = psycopg2.connect(dbname="postgres", user="postgres", password=os.environ["POSTGRES_PASSWORD"])
 cur = conn.cursor()
 
-cur.execute("""
-    drop schema staging cascade;
-    
+# create table
+cur.execute("""    
     create schema staging;
     
     create table staging.messung (
@@ -19,6 +20,7 @@ cur.execute("""
         CONSTRAINT pk_messung PRIMARY KEY(messung_id)
     );
 """)
+conn.commit()
 
 # Define the broker and topic
 broker_address = "broker.hivemq.com"
@@ -28,6 +30,7 @@ topic = "DataMgmt"
 def on_message(client, userdata, msg):
     print(f"Received message: {msg.payload.decode()} on topic {msg.topic}")
     cur.execute("insert into staging.messung (payload) values (%s)", (msg.payload.decode(),))
+    conn.commit()
 
 
 # Create an MQTT client

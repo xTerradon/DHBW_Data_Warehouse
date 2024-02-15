@@ -7,26 +7,20 @@ import json
 broker_address = "broker.hivemq.com"
 topic = "DataMgmt"
 
-# Callback when the client connects to the broker
-def on_connect(client, userdata, flags, rc):
-    print(f"Connected with result code {rc}")
-
 # Create an MQTT client
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "piuabsdfuwaeg4wq98thqb3pfdgdfhg43gq8b9ur0vb97", clean_session=False, )
-
 client.loop_start()
 
 # Connect to the broker
 client.connect(broker_address, 1883, 60)
 
-
-# Publish a message to the topic (json)
 message = json.dumps({
     "fin":"FEFEFEFEFEFEF6969",
     "zeit":int(time.time()),
     "geschwindigkeit":int(np.random.rand()*50)
 })
 
+# Publish a message to the topic (json)
 while True:
     print("Sending Topic")
     client.publish(topic, message)
