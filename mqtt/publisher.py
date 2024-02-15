@@ -4,7 +4,7 @@ import numpy as np
 import json
 
 # Define the broker and topic
-broker_address = "04a2c1f28d5f42bda4c7b64f116e683d.s1.eu.hivemq.cloud"
+broker_address = "broker.hivemq.com"
 topic = "DataMgmt"
 
 # Callback when the client connects to the broker
@@ -12,27 +12,26 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
 
 # Create an MQTT client
-client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "piuabsdfuwaeg4wq98thqb3pfdgdfhg43gq8b9ur0vb97", clean_session=False, )
 
-# Set the connection callback
-client.on_connect = on_connect
+client.loop_start()
 
 # Connect to the broker
-client.connect(broker_address, 8883, 60)
+client.connect(broker_address, 1883, 60)
+
 
 # Publish a message to the topic (json)
-message = json.dumps(json.dumps({
-    "fin":"SNTU411STM9032150",
+message = json.dumps({
+    "fin":"FEFEFEFEFEFEF6969",
     "zeit":int(time.time()),
-    "geschwindigkeit":np.random.rand()*50
-}))
+    "geschwindigkeit":int(np.random.rand()*50)
+})
 
 while True:
     print("Sending Topic")
     client.publish(topic, message)
     time.sleep(5)
+
 # Disconnect from the broker
 client.disconnect()
 
-# Start the MQTT loop to handle communication
-client.loop_start()
