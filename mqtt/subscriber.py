@@ -11,9 +11,9 @@ cur = conn.cursor()
 
 # create table
 cur.execute("""    
-    create schema staging;
+    create schema if not exists staging;
     
-    create table staging.messung (
+    create table if not exists staging.messung (
         messung_id serial, 
         payload JSON not null, 
         empfangen TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
