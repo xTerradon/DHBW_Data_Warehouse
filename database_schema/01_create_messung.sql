@@ -2,7 +2,6 @@ drop schema if exists staging cascade;
 
 create schema staging;
 
-
 create table staging.messung (
      messung_id serial
    , payload JSON not null
