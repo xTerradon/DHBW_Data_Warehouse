@@ -30,9 +30,9 @@ SELECT staging.kunde.kunde_account,
        staging.ort.ort,
        staging.land.land
 FROM staging.kunde
-LEFT JOIN staging.ort
+INNER JOIN staging.ort
 ON staging.kunde.wohnort_id = staging.ort.ort_id
-LEFT JOIN staging.land
+INNER JOIN staging.land
 ON staging.ort.land_id = staging.land.land_id;
 
 INSERT INTO mart.fct_verkauf(kfz_kennzeichen_id,
@@ -50,9 +50,9 @@ SELECT mart.dim_kfz_kennzeichen.kfz_kennzeichen_id,
        staging.fzg_kauf.kaufpreis,
        staging.fzg_kauf.rabatt_pct
 FROM staging.fzg_kauf
-RIGHT JOIN mart.dim_fahrzeug
+INNER JOIN mart.dim_fahrzeug
 ON staging.fzg_kauf.fin = mart.dim_fahrzeug.fin
-RIGHT JOIN mart.dim_kunde
+INNER JOIN mart.dim_kunde
 ON staging.fzg_kauf.kunde_account = mart.dim_kunde.kunde_account
-RIGHT JOIN mart.dim_kfz_kennzeichen
+INNER JOIN mart.dim_kfz_kennzeichen
 ON staging.fzg_kauf.kfz_kennzeichen = mart.dim_kfz_kennzeichen.kfz_kennzeichen;

@@ -38,4 +38,3 @@ CREATE TABLE mart.fct_verkauf (
     CONSTRAINT fk_kunde_id FOREIGN KEY(kunde_id) REFERENCES mart.dim_kunde(kunde_id),
     CONSTRAINT fk_fahrzeug_id FOREIGN KEY(fahrzeug_id) REFERENCES mart.dim_fahrzeug(fahrzeug_id)
 );
-    
